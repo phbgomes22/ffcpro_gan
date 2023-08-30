@@ -125,6 +125,10 @@ def train_progan(args: argparse.Namespace) -> None:
         args.num_channels = generator.num_channels
         args.latent_size = generator.latent_size
         args.use_eql = generator.use_eql
+
+        print("Loaded depth: ", generator.depth)
+        print(generator.num_channels)
+
     else:
         generator = Generator(
             depth=args.depth,
