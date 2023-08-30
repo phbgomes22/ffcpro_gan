@@ -12,6 +12,8 @@ from pro_gan_pytorch.gan import ProGAN
 from pro_gan_pytorch.networks import Discriminator, Generator
 from pro_gan_pytorch.utils import str2bool, str2GANLoss
 
+import sys
+
 # turn fast mode on
 cudnn.benchmark = True
 
