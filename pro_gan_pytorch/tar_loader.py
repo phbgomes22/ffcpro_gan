@@ -6,11 +6,11 @@
 import tarfile
 from io import BytesIO
 from PIL import Image, ImageFile
-from typing import Callable
+from typing import Callable, Tuple
 
 from torch.utils.data import Dataset, get_worker_info
 from torch import Tensor
-from .data_tools import get_transform
+from .data_tools import get_transform, adjust_dynamic_range
 
 try:  # make torchvision optional
   from torchvision.transforms.functional import to_tensor
@@ -67,8 +67,15 @@ class TarDataset(Dataset):
       and __len__).
   Author: Joao F. Henriques
   """
-  def __init__(self, archive, transform: Callable[[Image.Image], Tensor] = get_transform(), labeled:bool=False, extensions=('.png', '.jpg', '.jpeg'),
-    is_valid_file=None, ignore_unexpected_eof=False):
+  def __init__(self, archive, 
+               transform: Callable[[Image.Image], Tensor] = get_transform(), 
+               labeled:bool=False, 
+               extensions=('.png', '.jpg', '.jpeg'),
+                is_valid_file=None, 
+                ignore_unexpected_eof=False,
+                input_data_range: Tuple[float, float] = (0.0, 1.0),
+                output_data_range: Tuple[float, float] = (-1.0, 1.0),):
+    
     if not isinstance(archive, TarDataset):
       # open tar file. in a multiprocessing setting (e.g. DataLoader workers), we
       # have to open one file handle per worker (stored as the tar_obj dict), since
@@ -93,6 +100,8 @@ class TarDataset(Dataset):
     # also store references to the iterated samples (a subset of the above)
     self.filter_samples(is_valid_file, extensions)
     
+    self.output_data_range = output_data_range
+    self.input_data_range = input_data_range
     self.transform = transform
 
 
@@ -134,10 +143,12 @@ class TarDataset(Dataset):
     image = self.get_image(self.samples[index], pil=True)
     image = image.convert('RGB')  # if it's grayscale, convert to RGB
     if self.transform:  # apply any custom transforms
-      print("HAS TRANSFORMS!")
       image = self.transform(image)
 
     dummy_label = 0
+    image = adjust_dynamic_range(
+            image, drange_in=self.input_data_range, drange_out=self.output_data_range
+        )
     return image, dummy_label if self.labeled else image
 
 
