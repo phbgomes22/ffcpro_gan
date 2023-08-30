@@ -148,13 +148,13 @@ def train_progan(args: argparse.Namespace) -> None:
     )
 
     progan.train(
-        dataset  = TarDataset(
+        dataset = TarDataset(
             args.train_path,
             transform=get_transform(
                 new_size=(int(2 ** args.depth), int(2 ** args.depth)),
                 flip_horizontal=args.flip_horizontal,
             ),
-            rec_dir=args.rec_dir,
+          #  rec_dir=args.rec_dir,
         ),
         epochs=args.epochs,
         batch_sizes=args.batch_sizes,
