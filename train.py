@@ -33,9 +33,9 @@ def parse_arguments() -> argparse.Namespace:
 
     # fmt: off
     # Required arguments (input path to the data and the output directory for saving training assets)
-    parser.add_argument("train_path", action="store", type=Path,
+    parser.add_argument("--train_path", action="store", type=Path,
                         help="Path to the images folder for training the ProGAN")
-    parser.add_argument("output_dir", action="store", type=Path,
+    parser.add_argument("--output_dir", action="store", type=Path,
                         help="Path to the directory for saving the logs and models")
 
     # Optional arguments
