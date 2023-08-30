@@ -343,7 +343,6 @@ class ProGAN:
             real_images_for_render = next(iter(dummy_data_loader))
             fixed_input = torch.randn(num_samples, self.latent_size).to(self.device)
 
-            print(type(real_images_for_render))
             self.create_grid(
                 real_images_for_render,
                 scale_factor=1,

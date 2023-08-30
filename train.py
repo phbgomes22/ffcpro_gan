@@ -71,7 +71,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--ema_beta", action="store", type=float, default=0.999, required=False,
                         help="value of the ema beta")
     parser.add_argument("--epochs", action="store", type=int, required=False, nargs="+",
-                        default=[42 for _ in range(6)],
+                        default=[10 for _ in range(6)], #42
                         help="number of epochs over the training dataset per stage")
     parser.add_argument("--batch_sizes", action="store", type=int, required=False, nargs="+",
                         default=[32, 32, 32, 32, 16, 16], #, 8, 4, 2]
