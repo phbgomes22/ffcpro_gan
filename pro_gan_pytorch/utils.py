@@ -19,11 +19,11 @@ def adjust_dynamic_range(
     if drange_in != drange_out:
         scale = torch.tensor(
             (np.float32(drange_out[1]) - np.float32(drange_out[0])) / (np.float32(drange_in[1]) - np.float32(drange_in[0])),
-            dtype=data.dtype,
+            dtype=torch.float32,
         )
         bias = torch.tensor(
             np.float32(drange_out[0]) - np.float32(drange_in[0]) * scale,
-            dtype=data.dtype,
+            dtype=torch.float32,
         )
         # scale = (np.float32(drange_out[1]) - np.float32(drange_out[0])) / (
         #     np.float32(drange_in[1]) - np.float32(drange_in[0])
