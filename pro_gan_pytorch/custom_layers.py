@@ -111,8 +111,9 @@ class EqualizedConvTranspose2d(ConvTranspose2d):
         self.scale = np.sqrt(2) / np.sqrt(fan_in)
 
     def forward(self, x: Tensor, output_size: Any = None) -> Tensor:
+
         output_padding = self._output_padding(
-            input, output_size, self.stride, self.padding, self.kernel_size
+            input, output_size, self.stride, self.padding, self.kernel_size, x.dim()
         )
         return torch.conv_transpose2d(
             input=x,
