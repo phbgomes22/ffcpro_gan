@@ -67,7 +67,7 @@ class TarDataset(Dataset):
       and __len__).
   Author: Joao F. Henriques
   """
-  def __init__(self, archive, transform: Callable[[Image.Image], Tensor] = get_transform(), labeled:bool=True, extensions=('.png', '.jpg', '.jpeg'),
+  def __init__(self, archive, transform: Callable[[Image.Image], Tensor] = get_transform(), labeled:bool=False, extensions=('.png', '.jpg', '.jpeg'),
     is_valid_file=None, ignore_unexpected_eof=False):
     if not isinstance(archive, TarDataset):
       # open tar file. in a multiprocessing setting (e.g. DataLoader workers), we
