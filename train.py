@@ -9,7 +9,7 @@ from torch.backends import cudnn
 from pro_gan_pytorch.tar_loader import TarDataset
 from pro_gan_pytorch.data_tools import ImageDirectoryDataset, get_transform
 from pro_gan_pytorch.gan import ProGAN
-from pro_gan_pytorch.networks import Discriminator, Generator
+from pro_gan_pytorch.networks import Discriminator, Generator, load_models
 from pro_gan_pytorch.utils import str2bool, str2GANLoss
 
 import sys
