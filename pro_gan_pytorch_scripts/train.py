@@ -6,6 +6,7 @@ from pathlib import Path
 import torch
 from torch.backends import cudnn
 
+from pro_gan_pytorch.tar_loader import TarDataset
 from pro_gan_pytorch.data_tools import ImageDirectoryDataset, get_transform
 from pro_gan_pytorch.gan import ProGAN
 from pro_gan_pytorch.networks import Discriminator, Generator
@@ -145,7 +146,7 @@ def train_progan(args: argparse.Namespace) -> None:
     )
 
     progan.train(
-        dataset=ImageDirectoryDataset(
+        dataset  = TarDataset(
             args.train_path,
             transform=get_transform(
                 new_size=(int(2 ** args.depth), int(2 ** args.depth)),
