@@ -17,18 +17,19 @@ def adjust_dynamic_range(
     drange_out: Optional[Tuple[float, float]] = (0.0, 1.0),
 ):
     if drange_in != drange_out:
-        scale = torch.tensor(
-            (np.float32(drange_out[1]) - np.float32(drange_out[0])) / (np.float32(drange_in[1]) - np.float32(drange_in[0])),
-            dtype=torch.float32,
-        )
-        bias = torch.tensor(
-            np.float32(drange_out[0]) - np.float32(drange_in[0]) * scale,
-            dtype=torch.float32,
-        )
-        # scale = (np.float32(drange_out[1]) - np.float32(drange_out[0])) / (
-        #     np.float32(drange_in[1]) - np.float32(drange_in[0])
+        # scale = torch.tensor(
+        #     (np.float32(drange_out[1]) - np.float32(drange_out[0])) / (np.float32(drange_in[1]) - np.float32(drange_in[0])),
+        #     dtype=data.dtype,
         # )
-        # bias = np.float32(drange_out[0]) - np.float32(drange_in[0]) * scale
+        # bias = torch.tensor(
+        #     np.float32(drange_out[0]) - np.float32(drange_in[0]) * scale,
+        #     dtype=torch.float32,
+        # )
+        
+        scale = (np.float32(drange_out[1]) - np.float32(drange_out[0])) / (
+            np.float32(drange_in[1]) - np.float32(drange_in[0])
+        )
+        bias = np.float32(drange_out[0]) - np.float32(drange_in[0]) * scale
         data = data * scale + bias
 
     return torch.clamp(data, min=drange_out[0], max=drange_out[1])
