@@ -6,8 +6,11 @@
 import tarfile
 from io import BytesIO
 from PIL import Image, ImageFile
+from typing import Callable
 
 from torch.utils.data import Dataset, get_worker_info
+from torch import Tensor
+from .data_tools import get_transform
 
 try:  # make torchvision optional
   from torchvision.transforms.functional import to_tensor
@@ -64,7 +67,7 @@ class TarDataset(Dataset):
       and __len__).
   Author: Joao F. Henriques
   """
-  def __init__(self, archive, transform=to_tensor, labeled:bool=True, extensions=('.png', '.jpg', '.jpeg'),
+  def __init__(self, archive, transform: Callable[[Image.Image], Tensor] = get_transform(), labeled:bool=True, extensions=('.png', '.jpg', '.jpeg'),
     is_valid_file=None, ignore_unexpected_eof=False):
     if not isinstance(archive, TarDataset):
       # open tar file. in a multiprocessing setting (e.g. DataLoader workers), we
