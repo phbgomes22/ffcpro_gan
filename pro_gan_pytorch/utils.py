@@ -30,7 +30,7 @@ def adjust_dynamic_range(
             np.float32(drange_in[1]) - np.float32(drange_in[0])
         )
         bias = np.float32(drange_out[0]) - np.float32(drange_in[0]) * scale
-        data = torch.mul(data, scale) + bias
+        data = data * scale + bias # torch.mul(data, scale)
 
     return torch.clamp(data, min=drange_out[0], max=drange_out[1])
 

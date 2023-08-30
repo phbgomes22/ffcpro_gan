@@ -134,6 +134,7 @@ class TarDataset(Dataset):
     image = self.get_image(self.samples[index], pil=True)
     image = image.convert('RGB')  # if it's grayscale, convert to RGB
     if self.transform:  # apply any custom transforms
+      print("HAS TRANSFORMS!")
       image = self.transform(image)
 
     dummy_label = 0

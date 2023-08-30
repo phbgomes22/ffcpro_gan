@@ -208,7 +208,6 @@ class ProGAN:
         if scale_factor > 1:
             samples = interpolate(samples, scale_factor=scale_factor)
 
-        print(type(samples))
         samples = adjust_dynamic_range(
             torch.Tensor(samples), drange_in=(-1.0, 1.0), drange_out=(0.0, 1.0)
         )
@@ -343,6 +342,8 @@ class ProGAN:
             dummy_data_loader = get_data_loader(dataset, num_samples, num_workers)
             real_images_for_render = next(iter(dummy_data_loader))
             fixed_input = torch.randn(num_samples, self.latent_size).to(self.device)
+
+            print(type(real_images_for_render))
             self.create_grid(
                 real_images_for_render,
                 scale_factor=1,
