@@ -71,10 +71,10 @@ class TarDataset(Dataset):
                transform: Callable[[Image.Image], Tensor] = get_transform(), 
                labeled:bool=False, 
                extensions=('.png', '.jpg', '.jpeg'),
-                is_valid_file=None, 
-                ignore_unexpected_eof=False,
-                input_data_range: Tuple[float, float] = (0.0, 1.0),
-                output_data_range: Tuple[float, float] = (-1.0, 1.0),):
+               is_valid_file=None, 
+               ignore_unexpected_eof=False,
+               input_data_range: Tuple[float, float] = (0.0, 1.0),
+               output_data_range: Tuple[float, float] = (-1.0, 1.0),):
     
     if not isinstance(archive, TarDataset):
       # open tar file. in a multiprocessing setting (e.g. DataLoader workers), we
@@ -147,9 +147,9 @@ class TarDataset(Dataset):
 
     dummy_label = 0
     image = adjust_dynamic_range(
-            image, drange_in=self.input_data_range, drange_out=self.output_data_range
-        )
-    return image, dummy_label if self.labeled else image
+        image, drange_in=self.input_data_range, drange_out=self.output_data_range
+    )
+    return image # image, dummy_label if self.labeled else 
 
 
   def __len__(self):

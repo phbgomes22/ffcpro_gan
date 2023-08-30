@@ -209,7 +209,7 @@ class ProGAN:
             samples = interpolate(samples, scale_factor=scale_factor)
 
         samples = adjust_dynamic_range(
-            torch.Tensor(samples), drange_in=(-1.0, 1.0), drange_out=(0.0, 1.0)
+            samples, drange_in=(-1.0, 1.0), drange_out=(0.0, 1.0)
         )
 
         # save the images:
